@@ -1,0 +1,29 @@
+version: '3'
+
+networks:
+  hazelcast-proxy:
+    driver: bridge
+
+services:
+
+  database:
+    image: 'library/postgres:latest'
+    env_file:
+      - database.env
+    restart: always
+    networks:
+      - hazelcast-proxy
+    ports:
+      - 5432:5432
+
+  hazelcast-distributed-caching:
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    container_name: hazelcast-distributed-caching
+    networks:
+      - hazelcast-proxy
+    ports:
+      - 8081:8081
+    depends_on:
+      - database
