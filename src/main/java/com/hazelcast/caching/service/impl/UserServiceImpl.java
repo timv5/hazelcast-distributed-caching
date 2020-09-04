@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,6 +42,14 @@ public class UserServiceImpl implements UserService {
     @Cacheable(value = "showcaseCache", key = "#id", unless = "#result == null")
     @Override
     public Optional<Users> getUser(Long id) {
+        // sleep, so we can test caching - this wont happen if user will be in cache
+        try {
+            LOGGER.info("If this is logged means that user must be fetched from database not cache");
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+
         Optional<Users> optionalUsers = Optional.empty();
         try {
             optionalUsers = this.userRepository.findById(id);

@@ -1,1 +1,1 @@
-INSERT INTO public.users(id, email, name, lastName) values (1, 'testemail@email.com', 'testname', 'testlastname');
+INSERT INTO public.users(id, email, name, last_name) values (100, 'testemail@email.com', 'testname', 'testlastname');

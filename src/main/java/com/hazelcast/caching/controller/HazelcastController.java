@@ -21,21 +21,21 @@ public class HazelcastController {
     }
 
     @GetMapping("/{id}")
-    public Users getUserById(@RequestParam final Long id) {
-            LOGGER.info("::: HazelcastController.getUserById :::");
-         return this.userService.getUser(id).get();
+    public Users getUserById(@PathVariable final Long id) {
+        LOGGER.info("::: HazelcastController.getUserById :::");
+        return this.userService.getUser(id).get();
     }
 
     @PostMapping("/user")
-    public Users saveUser(Users user) {
+    public Users saveUser(@RequestBody Users user) {
         LOGGER.info("::: HazelcastController.saveUser :::");
-         return this.userService.save(user);
+        return this.userService.save(user);
     }
 
     @DeleteMapping
-    public Users deleteUser(Users user) {
+    public Users deleteUser(@RequestBody Users user) {
         LOGGER.info("::: HazelcastController.deleteUser :::");
-         return this.userService.deleteUser(user);
+        return this.userService.deleteUser(user);
     }
 
 }
